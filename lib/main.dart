@@ -34,7 +34,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [homePage(), calendarPage(), PriorityPage()];
+  final List<Widget> _pages = [HomePage(), CalendarPage(), PriorityPage()];
 
   void _NavTapped(int index) {
     setState(() {
@@ -51,7 +51,7 @@ class _MainAppState extends State<MainApp> {
         index: _currentIndex, 
         children: _pages
       ),
-      floatingActionButton: bottomNav(
+      bottomNavigationBar: bottomNav(
         currentIndex: _currentIndex,
         onTap: _NavTapped,
       ),

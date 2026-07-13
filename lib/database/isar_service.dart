@@ -33,9 +33,9 @@ class IsarService {
 
     return await isar.activityTasks
     .filter()
-    .startTimeGreaterThan(startDay)
-    .startTimeLessThan(endDay)
-    .sortByStartTime()
+    .endTimeGreaterThan(startDay)
+    .endTimeLessThan(endDay)
+    .sortByEndTime()
     .findAll();
   }
 

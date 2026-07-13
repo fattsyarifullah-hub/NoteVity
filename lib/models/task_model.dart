@@ -5,6 +5,7 @@ import 'package:isar/isar.dart';
 part 'task_model.g.dart';
 
 enum TaskPriority { high, medium, low }
+enum ColorHex {red, yellow, green }
 
 @collection
 class ActivityTask {
@@ -12,7 +13,8 @@ class ActivityTask {
 
   late String title;
 
-  late String color;
+  @Enumerated(EnumType.name)
+  late ColorHex color;
 
   @Enumerated(EnumType.name)
   late TaskPriority priority;
@@ -20,8 +22,6 @@ class ActivityTask {
   late bool isCompleted;
 
   late bool isExpired;
-
-  late DateTime startTime;
 
   late DateTime endTime;
 

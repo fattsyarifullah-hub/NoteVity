@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'package:notevity/models/task_model.dart';
+import 'package:notevity/widgets/calendar_horizontal.dart';
+import 'package:notevity/widgets/task_timeline_list.dart';
+import '../widgets/dropdown_month.dart';
+import '../widgets/popup_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
@@ -9,20 +13,27 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  void showTestPop() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(title: Text("Test Pop Up")),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Ini Ca Page")),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          DropdownMonth(),
+          SizedBox(height: 10,),
+          CalendarHorizontal(),
+          SizedBox(height: 5,),
+          TaskTimelineList()
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: showTestPop,
-        child: Icon(Icons.navigation),
+        onPressed: () => showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return PopupCalendar();
+          },
+        ),
+        child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

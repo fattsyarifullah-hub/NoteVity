@@ -3,9 +3,16 @@ import 'package:notevity/screens/calendar_page.dart';
 import 'package:notevity/screens/home_page.dart';
 import 'package:notevity/screens/priority_page.dart';
 import 'package:notevity/widgets/bottom_nav.dart';
+import 'package:provider/provider.dart';
+import 'providers/task_providers.dart';
 
 void main() {
-  runApp(const NoteVity());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => TaskProvider()..refreshTasks(),
+      child: const NoteVity(),
+    ),
+  );
 }
 
 class NoteVity extends StatelessWidget {
@@ -45,12 +52,8 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("NoteVity")),
-      body: IndexedStack(
-        index: _currentIndex, 
-        children: _pages
-      ),
+      appBar: AppBar(title: Text("NoteVity")),
+      body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: bottomNav(
         currentIndex: _currentIndex,
         onTap: _NavTapped,

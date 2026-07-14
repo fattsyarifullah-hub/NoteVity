@@ -22,3 +22,13 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
+subprojects {
+    plugins.withType<com.android.build.gradle.api.AndroidBasePlugin> {
+        configure<com.android.build.gradle.BaseExtension> {
+            if (namespace == null) {
+                namespace = project.group.toString()
+            }
+        }
+    }
+}

@@ -21,6 +21,7 @@ const ActivityTaskSchema = CollectionSchema(
       id: 0,
       name: r'color',
       type: IsarType.string,
+      enumMap: _ActivityTaskcolorEnumValueMap,
     ),
     r'endTime': PropertySchema(
       id: 1,
@@ -43,13 +44,8 @@ const ActivityTaskSchema = CollectionSchema(
       type: IsarType.string,
       enumMap: _ActivityTaskpriorityEnumValueMap,
     ),
-    r'startTime': PropertySchema(
-      id: 5,
-      name: r'startTime',
-      type: IsarType.dateTime,
-    ),
     r'title': PropertySchema(
-      id: 6,
+      id: 5,
       name: r'title',
       type: IsarType.string,
     )
@@ -74,7 +70,7 @@ int _activityTaskEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.color.length * 3;
+  bytesCount += 3 + object.color.name.length * 3;
   bytesCount += 3 + object.priority.name.length * 3;
   bytesCount += 3 + object.title.length * 3;
   return bytesCount;
@@ -86,13 +82,12 @@ void _activityTaskSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.color);
+  writer.writeString(offsets[0], object.color.name);
   writer.writeDateTime(offsets[1], object.endTime);
   writer.writeBool(offsets[2], object.isCompleted);
   writer.writeBool(offsets[3], object.isExpired);
   writer.writeString(offsets[4], object.priority.name);
-  writer.writeDateTime(offsets[5], object.startTime);
-  writer.writeString(offsets[6], object.title);
+  writer.writeString(offsets[5], object.title);
 }
 
 ActivityTask _activityTaskDeserialize(
@@ -102,7 +97,9 @@ ActivityTask _activityTaskDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = ActivityTask();
-  object.color = reader.readString(offsets[0]);
+  object.color =
+      _ActivityTaskcolorValueEnumMap[reader.readStringOrNull(offsets[0])] ??
+          ColorHex.red;
   object.endTime = reader.readDateTime(offsets[1]);
   object.id = id;
   object.isCompleted = reader.readBool(offsets[2]);
@@ -110,8 +107,7 @@ ActivityTask _activityTaskDeserialize(
   object.priority =
       _ActivityTaskpriorityValueEnumMap[reader.readStringOrNull(offsets[4])] ??
           TaskPriority.high;
-  object.startTime = reader.readDateTime(offsets[5]);
-  object.title = reader.readString(offsets[6]);
+  object.title = reader.readString(offsets[5]);
   return object;
 }
 
@@ -123,7 +119,8 @@ P _activityTaskDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (_ActivityTaskcolorValueEnumMap[reader.readStringOrNull(offset)] ??
+          ColorHex.red) as P;
     case 1:
       return (reader.readDateTime(offset)) as P;
     case 2:
@@ -135,14 +132,22 @@ P _activityTaskDeserializeProp<P>(
               reader.readStringOrNull(offset)] ??
           TaskPriority.high) as P;
     case 5:
-      return (reader.readDateTime(offset)) as P;
-    case 6:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
+const _ActivityTaskcolorEnumValueMap = {
+  r'red': r'red',
+  r'yellow': r'yellow',
+  r'green': r'green',
+};
+const _ActivityTaskcolorValueEnumMap = {
+  r'red': ColorHex.red,
+  r'yellow': ColorHex.yellow,
+  r'green': ColorHex.green,
+};
 const _ActivityTaskpriorityEnumValueMap = {
   r'high': r'high',
   r'medium': r'medium',
@@ -249,7 +254,7 @@ extension ActivityTaskQueryWhere
 extension ActivityTaskQueryFilter
     on QueryBuilder<ActivityTask, ActivityTask, QFilterCondition> {
   QueryBuilder<ActivityTask, ActivityTask, QAfterFilterCondition> colorEqualTo(
-    String value, {
+    ColorHex value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -263,7 +268,7 @@ extension ActivityTaskQueryFilter
 
   QueryBuilder<ActivityTask, ActivityTask, QAfterFilterCondition>
       colorGreaterThan(
-    String value, {
+    ColorHex value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -278,7 +283,7 @@ extension ActivityTaskQueryFilter
   }
 
   QueryBuilder<ActivityTask, ActivityTask, QAfterFilterCondition> colorLessThan(
-    String value, {
+    ColorHex value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -293,8 +298,8 @@ extension ActivityTaskQueryFilter
   }
 
   QueryBuilder<ActivityTask, ActivityTask, QAfterFilterCondition> colorBetween(
-    String lower,
-    String upper, {
+    ColorHex lower,
+    ColorHex upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -647,62 +652,6 @@ extension ActivityTaskQueryFilter
     });
   }
 
-  QueryBuilder<ActivityTask, ActivityTask, QAfterFilterCondition>
-      startTimeEqualTo(DateTime value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'startTime',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<ActivityTask, ActivityTask, QAfterFilterCondition>
-      startTimeGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'startTime',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<ActivityTask, ActivityTask, QAfterFilterCondition>
-      startTimeLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'startTime',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<ActivityTask, ActivityTask, QAfterFilterCondition>
-      startTimeBetween(
-    DateTime lower,
-    DateTime upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'startTime',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<ActivityTask, ActivityTask, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -907,18 +856,6 @@ extension ActivityTaskQuerySortBy
     });
   }
 
-  QueryBuilder<ActivityTask, ActivityTask, QAfterSortBy> sortByStartTime() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'startTime', Sort.asc);
-    });
-  }
-
-  QueryBuilder<ActivityTask, ActivityTask, QAfterSortBy> sortByStartTimeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'startTime', Sort.desc);
-    });
-  }
-
   QueryBuilder<ActivityTask, ActivityTask, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1007,18 +944,6 @@ extension ActivityTaskQuerySortThenBy
     });
   }
 
-  QueryBuilder<ActivityTask, ActivityTask, QAfterSortBy> thenByStartTime() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'startTime', Sort.asc);
-    });
-  }
-
-  QueryBuilder<ActivityTask, ActivityTask, QAfterSortBy> thenByStartTimeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'startTime', Sort.desc);
-    });
-  }
-
   QueryBuilder<ActivityTask, ActivityTask, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1066,12 +991,6 @@ extension ActivityTaskQueryWhereDistinct
     });
   }
 
-  QueryBuilder<ActivityTask, ActivityTask, QDistinct> distinctByStartTime() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'startTime');
-    });
-  }
-
   QueryBuilder<ActivityTask, ActivityTask, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1088,7 +1007,7 @@ extension ActivityTaskQueryProperty
     });
   }
 
-  QueryBuilder<ActivityTask, String, QQueryOperations> colorProperty() {
+  QueryBuilder<ActivityTask, ColorHex, QQueryOperations> colorProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'color');
     });
@@ -1116,12 +1035,6 @@ extension ActivityTaskQueryProperty
       priorityProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'priority');
-    });
-  }
-
-  QueryBuilder<ActivityTask, DateTime, QQueryOperations> startTimeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'startTime');
     });
   }
 

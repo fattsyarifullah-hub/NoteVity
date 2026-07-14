@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../providers/task_providers.dart';
+import '../../providers/task_providers.dart';
 import 'package:provider/provider.dart';
-import '../models/task_model.dart';
+import '../../models/task_model.dart';
 import 'dart:async';
 
 class PopupCalendar extends StatefulWidget {

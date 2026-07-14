@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:notevity/models/task_model.dart';
-import 'package:notevity/widgets/calendar_horizontal.dart';
-import 'package:notevity/widgets/task_timeline_list.dart';
-import '../widgets/dropdown_month.dart';
-import '../widgets/popup_calendar.dart';
+import 'package:notevity/widgets/calendarWidget/calendar_horizontal.dart';
+import 'package:notevity/widgets/calendarWidget/task_timeline_list.dart';
+import '../widgets/calendarWidget/dropdown_month.dart';
+import '../widgets/calendarWidget/popup_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});

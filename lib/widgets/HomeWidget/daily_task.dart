@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notevity/widgets/task_tile.dart';
 import 'package:provider/provider.dart';
-import '../models/task_model.dart';
-import '../providers/task_providers.dart';
+import '../../providers/task_providers.dart';
 import 'card_count_home.dart';
 
 class DailyTask extends StatelessWidget {
@@ -26,14 +25,22 @@ class DailyTask extends StatelessWidget {
 
     return Column(
       children: [
-        buildCard(
-          title: "Progress", 
-          count: onProgressCount, 
-          color: Colors.green),
-        buildCard(
-          title: "Completed", 
-          count: isDoneCount, 
-          color: Colors.blue),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 5.0,
+          children: [
+            buildCard(
+              title: "Progress",
+              count: onProgressCount,
+              color: Colors.green,
+            ),
+            buildCard(
+              title: "Completed",
+              count: isDoneCount,
+              color: Colors.blue,
+            ),
+          ],
+        ),
         Expanded(
           child: todayTask.isEmpty
               ? Center(child: Text("Tidak ada aktivitas untuk hari ini"))

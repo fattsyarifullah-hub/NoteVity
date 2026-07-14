@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/daily_task.dart';
+import '../widgets/HomeWidget/daily_task.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

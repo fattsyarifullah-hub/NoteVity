@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notevity/widgets/task_tile.dart';
 import 'package:provider/provider.dart';
-import '../models/task_model.dart';
-import '../providers/task_providers.dart';
+import '../../providers/task_providers.dart';
 import 'empty_time.dart';
 
 class TaskTimelineList extends StatelessWidget {

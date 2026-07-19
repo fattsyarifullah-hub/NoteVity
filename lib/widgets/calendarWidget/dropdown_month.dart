@@ -24,27 +24,29 @@ class DropdownMonth extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<TaskProvider>();
     final currentMonth = provider.selectedMonth;
-    
-    return DropdownButtonHideUnderline(
-      child: DropdownButton<int>(
-        icon: Icon(Icons.keyboard_arrow_down),
-        style: const TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
-          color: Colors.black
+
+    return Center(
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<int>(
+          icon: Icon(Icons.keyboard_arrow_down),
+          style: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+          value: currentMonth,
+          items: List.generate(12, (index) {
+            return DropdownMenuItem<int>(
+              value: index + 1,
+              child: Text(_Month[index]),
+            );
+          }),
+          onChanged: (int? newMonth) {
+            if (newMonth != null) {
+              context.read<TaskProvider>().changeMonth(newMonth);
+            }
+          },
         ),
-        value: currentMonth,
-        items: List.generate(12, (index) {
-          return DropdownMenuItem<int>(
-            value: index + 1,
-            child: Text(_Month[index]),
-          );
-        }),
-        onChanged: (int? newMonth) {
-          if (newMonth != null) {
-            context.read<TaskProvider>().changeMonth(newMonth);
-          }
-        },
       ),
     );
   }

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-
 class bottomNav extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
@@ -10,14 +9,30 @@ class bottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: onTap,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Calendar"),
-        BottomNavigationBarItem(icon: Icon(Icons.low_priority_outlined), label: "Priority")
-      ]
+    return NavigationBar(
+      backgroundColor: const Color.fromARGB(58, 77, 69, 69),
+      selectedIndex: currentIndex,
+      onDestinationSelected: onTap,
+      indicatorColor: Colors.blueAccent.withOpacity(0.7),
+      height: 65.0,
+      elevation: 6.0,
+      destinations: const [
+        NavigationDestination(
+          icon: Icon(Icons.home_outlined, color: Colors.black),
+          selectedIcon: Icon(Icons.home, color: Colors.white),
+          label: "Home",
+        ),
+        NavigationDestination(
+          icon: Icon(Icons.calendar_month_outlined, color: Colors.black),
+          selectedIcon: Icon(Icons.calendar_month, color: Colors.white),
+          label: "Calendar",
+        ),
+        NavigationDestination(
+          icon: Icon(Icons.low_priority_outlined, color: Colors.black),
+          selectedIcon: Icon(Icons.low_priority, color: Colors.white),
+          label: "Priority",
+        ),
+      ],
     );
   }
 }

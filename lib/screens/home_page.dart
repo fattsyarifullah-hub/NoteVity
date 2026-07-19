@@ -6,6 +6,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DailyTask();
+    return Padding(
+      padding: EdgeInsetsGeometry.only(top: 10.0),
+      child: DailyTask(),
+    );
   }
 }

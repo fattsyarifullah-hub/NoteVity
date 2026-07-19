@@ -5,6 +5,17 @@ import '../../providers/task_providers.dart';
 class CalendarHorizontal extends StatelessWidget {
   const CalendarHorizontal({super.key});
 
+  static const List<String> _weekdays = [
+    '',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun',
+  ];
+
   int _getDaysInMonth(int year, int month) {
     return DateTime(year, month + 1, 0).day;
   }
@@ -26,6 +37,14 @@ class CalendarHorizontal extends StatelessWidget {
         itemBuilder: (context, index) {
           final dayNumber = index + 1;
 
+          final currentDayName = DateTime(
+            currentYear,
+            selectedMonth,
+            dayNumber,
+          );
+
+          final dayName = _weekdays[currentDayName.weekday];
+
           final isSelected =
               dayNumber == selectedDate.day &&
               selectedMonth == selectedDate.month;
@@ -42,18 +61,42 @@ class CalendarHorizontal extends StatelessWidget {
             },
             child: AnimatedContainer(
               width: 50,
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
               height: 25,
               duration: Duration(milliseconds: 400),
               decoration: BoxDecoration(
-                color: isSelected ? Colors.black : Colors.white,
-              ),
-              child: Center(
-                child: Text(
-                  '$dayNumber',
-                  style: TextStyle(
-                    color: isSelected ? Colors.white : Colors.black,
+                color: isSelected
+                    ? Color.fromARGB(255, 215, 154, 237)
+                    : Colors.white,
+                borderRadius: BorderRadius.circular(15.0),
+                border: Border(
+                  bottom: BorderSide(
+                    width: 10.0,
+                    color: isSelected
+                        ? Colors.white
+                        : Color.fromARGB(255, 215, 154, 237),
                   ),
                 ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    '$dayNumber',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: isSelected ? Colors.white : Colors.black,
+                    ),
+                  ),
+                  Text(
+                    dayName,
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.bold,
+                      color: isSelected ? Colors.white : Colors.black,
+                    ),
+                  ),
+                ],
               ),
             ),
           );

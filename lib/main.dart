@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:notevity/screens/calendar_page.dart';
 import 'package:notevity/screens/home_page.dart';
 import 'package:notevity/screens/priority_page.dart';
@@ -52,7 +53,10 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("NoteVity")),
+      appBar: AppBar(
+        title: Text("NoteVity", style: GoogleFonts.dmSans(fontWeight: FontWeight.bold, color: Colors.white),),
+        backgroundColor: Color.fromARGB(255, 215, 154, 237),
+      ),
       body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: bottomNav(
         currentIndex: _currentIndex,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class EmptyTime extends StatelessWidget {
   final int hour;
@@ -9,16 +10,16 @@ class EmptyTime extends StatelessWidget {
     final formattedHour = '${hour.toString().padLeft(2, '0')}.00';
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
-          child: Text(formattedHour),
+        Padding(
+          padding: EdgeInsetsGeometry.only(left: 7.5, top: 12.5),
+          child: SizedBox(
+            height: 25.0,
+            child: Text(formattedHour, style: GoogleFonts.montserrat(fontWeight: FontWeight.w600)),
+          ),
         ),
-        Expanded(
-          child: Container(
-            height: 1,
-          )
-        )
+        Container(height: 5),
       ],
     );
   }

@@ -4,6 +4,8 @@ import '../../providers/task_providers.dart';
 import '../../models/task_model.dart';
 import 'priority_card.dart';
 import 'package:intl/intl.dart';
+import '../../utils/task_color.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PriorityContainer extends StatefulWidget {
   const PriorityContainer({super.key});
@@ -97,25 +99,88 @@ class _PriorityContainerState extends State<PriorityContainer> {
   }
 
   Widget _priorityTaskTile(ActivityTask task) {
+    final bool isDisable = task.isCompleted || task.isExpired;
+    final cardColor = task.priority.realColor();
     final formattedDate = DateFormat("dd MMM yyyy, HH:mm").format(task.endTime);
 
-    return Container(
+    return Padding(
+      padding: EdgeInsetsGeometry.only(top: 7.0),
       child: Row(
         children: [
-          Column(
-            children: [
-              Text(task.title),
-              Row(
-                children: [
-                  Icon(Icons.calendar_today),
-                  Text("Deadline ${formattedDate}"),
-                ],
+          Padding(
+            padding: EdgeInsetsGeometry.only(left: 7.5),
+            child: SizedBox(
+              width: 50.0,
+              height: 25.0,
+              child: Text(
+                formattedDate,
+                style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
               ),
-            ],
+            ),
           ),
-          IconButton(
-            onPressed: () => context.read<TaskProvider>().toggleCompleted(task),
-            icon: Icon(Icons.circle_outlined),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10.0),
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border(left: BorderSide(color: cardColor, width: 10)),
+              ),
+              child: Container(
+                margin: EdgeInsets.only(right: 15.0),
+                padding: EdgeInsets.only(left: 15.0, right: 20.0),
+                decoration: BoxDecoration(color: cardColor.withOpacity(0.3)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      task.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20.0,
+                        shadows: [
+                          Shadow(
+                            color: const Color.fromARGB(
+                              255,
+                              242,
+                              240,
+                              240,
+                            ).withOpacity(0.3),
+                            offset: Offset(1, 3),
+                          ),
+                        ],
+                        decoration: isDisable && task.isCompleted ? TextDecoration.lineThrough : null
+                      ),
+                    ),
+                    InkWell(
+                      onTap: isDisable && !task.isCompleted
+                          ? null
+                          : () {
+                              context.read<TaskProvider>().toggleCompleted(
+                                task,
+                              );
+                            },
+                      child: Container(
+                        width: 25,
+                        height: 25,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: cardColor.withOpacity(0.7),
+                            width: 3,
+                          ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(3.0),
+                        ),
+                        child: task.isCompleted
+                            ? Icon(Icons.check, size: 20, color: Colors.white)
+                            : null,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ),

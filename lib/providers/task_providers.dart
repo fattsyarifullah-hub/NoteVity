@@ -11,15 +11,12 @@ class TaskProvider extends ChangeNotifier {
   DateTime _selectedDate = DateTime.now();
   int _selectedMonth = DateTime.now().month;
 
-  // List<ActivityTask> get currentTask => _currentTask;
-  List<ActivityTask> get currentTask {
-    return _currentTask.where((task) {
-      final bool isCompleted = task.isCompleted;
-      final bool isDone = task.isExpired;
-
-      return !isCompleted && !isDone;
-    }).toList();
-  }
+  List<ActivityTask> get currentTask => _currentTask;
+  // List<ActivityTask> get currentTask {
+  //   return _currentTask.where((task) {
+  //     return !task.isCompleted && !task.isExpired;
+  //   }).toList();
+  // }
 
   DateTime get selectedDate => _selectedDate;
   int get selectedMonth => _selectedMonth;

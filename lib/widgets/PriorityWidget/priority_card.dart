@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notevity/models/task_model.dart';
-import 'priority_container.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PriorityCard extends StatelessWidget {
   final String title;
@@ -19,7 +19,7 @@ class PriorityCard extends StatelessWidget {
     required this.isSelected,
     required this.cardColor,
     required this.activeColor,
-    required this.onTap
+    required this.onTap,
   });
 
   @override
@@ -27,14 +27,30 @@ class PriorityCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
+        width: 150.0,
+        height: 50.0,
         duration: Duration(milliseconds: 300),
         decoration: BoxDecoration(
-          color: isSelected ? activeColor : cardColor
+          color: Colors.white,
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(title),
-            Text("$count")
+            Text(
+              title,
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.bold,
+                color: isSelected ? activeColor : cardColor,
+              ),
+            ),
+            Text(
+              "$count",
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.bold,
+                color: isSelected ? activeColor : cardColor,
+              ),
+            ),
           ],
         ),
       ),

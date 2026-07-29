@@ -15,6 +15,7 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(153, 236, 230, 230),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,6 +34,8 @@ class _CalendarPageState extends State<CalendarPage> {
           },
         ),
         child: Icon(Icons.add),
+        backgroundColor: Color.fromARGB(255, 215, 154, 237),
+        foregroundColor: Colors.white,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

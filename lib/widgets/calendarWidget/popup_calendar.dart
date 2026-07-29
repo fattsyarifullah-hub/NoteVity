@@ -85,7 +85,6 @@ class _PopupCalendarState extends State<PopupCalendar> {
           SizedBox(height: 10),
           Row(
             children: [
-              Text("Waktu"),
               OutlinedButton.icon(
                 onPressed: () => _selectEndTime(context),
                 icon: Icon(Icons.access_time),
